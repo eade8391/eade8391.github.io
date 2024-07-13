@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>明日方舟职业选择</title>
+    <script src="jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>明日方舟职业选择</h1>
+        <h2 id="result">→ ?? ?? ←</h2>
+        <button id="callButton">选择</button>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            var intervalId; // 用于存储定时器的ID
+
+            $("#callButton").click(function () {
+                // 发送AJAX请求获取职业列表
+                $.getJSON("names.json", function (names) {
+                    clearInterval(intervalId); // 清除之前的定时器
+
+                    // 随机选择一个职业
+                    var randomIndex = Math.floor(Math.random() * names.length);
+                    var randomName = names[randomIndex];
+
+                    var randomIndex2 = Math.floor(Math.random() * names.length);
+                    var randomName2 = names[randomIndex2];
+
+                    // 开始定时切换职业
+                    intervalId = setInterval(function () {
+                        // 随机选择一个职业
+                        randomIndex = Math.floor(Math.random() * names.length);
+                        randomName = names[randomIndex];
+
+                        randomIndex2 = Math.floor(Math.random() * names.length);
+                        randomName2 = names[randomIndex2];
+
+                        // 显示随机职业
+                        $("#result").text(randomName + " " + randomName2);
+                    }, 50);
+
+                    // 在一段时间后停止定时器并显示最终职业
+                    setTimeout(function () {
+                        clearInterval(intervalId); // 停止定时器
+                        $("#result").text("→ " + randomName + " " + randomName2 + " ←");
+                    }, 3000); // 设置停止时间，单位为毫秒
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
