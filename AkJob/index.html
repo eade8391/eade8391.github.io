@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.unpkg.com/jquery@3.7.1/dist/jquery.min.js"></script>
+    <title>Arknight &middot; 职业随机</title>
+    <style type="text/css" media="screen">
+        body {
+            background-color: #f1f1f1;
+            margin: 0;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .container {
+            margin: 5% auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 60px;
+            font-weight: 500;
+            margin: 0px 0 50px 0;
+            text-shadow: 0 1px 0 #fff;
+        }
+
+        h2 {
+            font-size: 50px;
+            font-weight: 200;
+            margin: 0px 0 50px 0;
+            text-shadow: 0 1px 0 #fff;
+        }
+
+        button {
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 30px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            background-color: white;
+            color: black;
+            border: 2px solid #0446aa;
+        }
+
+        button:hover {
+            background-color: #0446aa;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <iframe src="ak.svg" scrolling="no" frameborder="no" border="0"
+            style="overflow: auto;text-align: center;"></iframe>
+        <h1>职业随机</h1>
+        <h2 id="result">→ ?? ?? ←</h2>
+        <button id="callButton">开始</button>
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            var intervalId;
+
+            $("#callButton").click(function () {
+                $.getJSON("jobs.json", function (jobs) {
+                    clearInterval(intervalId);
+                    intervalId = setInterval(function () {
+                        randomIndex = Math.floor(Math.random() * jobs.length);
+                        randomJob = jobs[randomIndex];
+
+                        randomIndex = Math.floor(Math.random() * jobs.length);
+                        randomJob2 = jobs[randomIndex];
+                        $("#result").text("? " + randomJob + " " + randomJob2 + " ?");
+                    }, 50);
+                    setTimeout(function () {
+                        clearInterval(intervalId);
+                        $("#result").text("→ " + randomJob + " " + randomJob2 + " ←");
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>
